@@ -1,0 +1,71 @@
+
+# Code Documentation: `make_dataframes`
+
+## Introduction
+
+The `make_dataframes` function is designed to process data from an HDF5 file containing tracked locations of body parts. It performs various tasks such as data retrieval, missing data interpolation, velocity calculation, and DataFrame creation. Additionally, it checks if specific points move along the short axis.
+
+## Function Signature
+
+```python
+def make_dataframes(filename)
+```
+
+### Parameters
+
+- `filename` (str): The path to the HDF5 file containing the tracked data.
+
+### Return Value
+
+- `result` (pandas DataFrame): A DataFrame containing processed data including velocities and short axis movement information.
+
+## Function Details
+
+1. **Data Retrieval and Preliminary Checks**
+   - The function reads the specified HDF5 file (`filename`) and extracts relevant data, including locations and node names.
+
+2. **Missing Data Interpolation**
+   - It applies an interpolation method to handle missing data points, ensuring a smooth representation of the body part locations.
+
+3. **Calculation of Velocities**
+   - The function computes the velocities of various body parts using a Savitzky-Golay filter.
+
+4. **DataFrame Creation**
+   - Data for nose, center, left, and right body parts, along with their respective velocities, are organized into separate DataFrames.
+
+5. **Checking for Movement along the Short Axis**
+   - The function evaluates if specific points (nose, center, left, right) move along the short axis. The result is appended to the DataFrame.
+
+6. **Concatenation of DataFrames**
+   - The individual DataFrames are combined along the column axis to create the final result.
+
+## Usage
+
+```python
+result = make_dataframes("path/to/your/datafile.h5")
+```
+
+## Example
+
+```python
+result = make_dataframes("sample_data.h5")
+print(result)
+```
+
+## Dependencies
+
+- `h5py`: A Python interface for working with HDF5 files.
+- `numpy`: Fundamental package for numerical computing in Python.
+- `pandas`: Data manipulation and analysis library.
+
+## Notes
+
+- Ensure that the specified HDF5 file contains the necessary datasets ("tracks", "node_names") for this function to work properly.
+
+- The function assumes a specific structure for the HDF5 file based on the comments in the code. Make sure the actual file adheres to this structure.
+
+- It's recommended to check the generated `result` DataFrame for accuracy and validity, especially if there are any deviations from the expected output.
+
+---
+
+Please replace the placeholder details (e.g., "path/to/your/datafile.h5", "sample_data.h5") with actual information relevant to your project. Additionally, make sure to verify the accuracy of the documentation based on your specific use case.
